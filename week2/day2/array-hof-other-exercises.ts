@@ -18,12 +18,23 @@ type Academite = {
 
 // Sort the array by the names (alphabetically)
 // Make a separate sorting function then use it
-const sortByName = 'TODO'
+
+function sortByName(arr: Academite[]): Academite[] {
+  return arr.sort((a,b)=> a.name.localeCompare(b.name));
+}
+const sortedName = sortByName(someAcademitesWithAges);
+
+console.log(sortedName)
 // TODO
 
 // Sort the array by the reverse ages (so, oldest first)
 // Make a separate sorting function then use it
-const sortByAges = 'TODO'
+function sortByAge(arr: Academite[]): Academite[]{
+  return arr.sort((a,b)=> a.age - b.age);
+}
+const sortedAge = sortByAge(someAcademitesWithAges);
+console.log(sortedAge)
+
 // TODO
 
 
