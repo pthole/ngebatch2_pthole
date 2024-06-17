@@ -14,12 +14,12 @@ const helloAcademy = (a:any)=>{
 
 helloAcademy(academyFolks);
 // Call the function that says hello with an exploded array (spread it)
-// TODO
+helloAcademy(...academyFolks);
 
 // Add more academy folks into a new array in one line using the spread operator
 // TODO
 const academyFolks2: string[] = ['Alice', 'Bob', 'Charles', 'Danielle', 'Akshay','Kalpana','Thangaraj','Sagar']
 // Say hello to all the academy folks using the spread operator
-// TODO
-helloAcademy(academyFolks2);
+
+helloAcademy(...academyFolks2);
 // EOF
