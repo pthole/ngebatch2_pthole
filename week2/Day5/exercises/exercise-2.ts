@@ -63,36 +63,45 @@ const foodData: Food[] = [
 
 // Part 1: Refactor queryUser and queryFood to 'reject' when missing the required values
 const queryUser = (personName: string): Promise<User> =>
-  new Promise((resolve) => {
-    const result = userData.filter((user) => user.name === personName)[ 0 ] || null
-    resolve(result)
-  })
+  new Promise((resolve, reject) => {
+    const result = userData.filter((user) => user.name === personName)[0];
+    if (result) {
+      resolve(result);
+    } else {
+      reject(new Error(`User not found: ${personName}`));
+    }
+  });
 
 // Part 1: Refactor queryUser and queryFood to 'reject' when missing the required values
 const queryFood = (foodId: number | null): Promise<Food> =>
-  new Promise((resolve) => {
-    const result = foodData.filter((food) => food.id === foodId)[ 0 ] || null
-    resolve(result)
-  })
-
+  new Promise((resolve, reject) => {
+    const result = foodData.filter((food) => food.id === foodId)[0];
+    if (result) {
+      resolve(result);
+    } else {
+      reject(new Error(`Food not found: ${foodId}`));
+    }
+  });
 // Fetch data
-const findFavouriteFood = (name: string) =>
-  new Promise((resolve) => {
-    queryUser(name)
-      .then((person) => queryFood(person.food))
-      .then((foodItem) => resolve(`${name} likes ${foodItem.name}`))
-  })
+const findFavouriteFood = (name: string): Promise<string> =>
+  queryUser(name)
+    .then((person) => {
+      if (person.food === null) {
+        throw new Error(`${name} does not have a favorite food`);
+      }
+      return queryFood(person.food);
+    })
+    .then((foodItem) => `${name} likes ${foodItem.name}`);
+console.log('User data:', userData);
+console.log('Food data:', foodData);
 
-console.log('User data:', userData)
-console.log('Food data:', foodData)
-
-console.log('')
-console.log('Bad Results:')
+console.log('');
+console.log('Bad Results:');
 
 // Part 2. Add '.catch' blocks to these function chains to catch the rejected promises
-findFavouriteFood('').then(console.log) // Test rejection for not providing a name
-findFavouriteFood('Megan').then(console.log) // Test rejection for giving a name that doesn't exist
-findFavouriteFood('Tim').then(console.log) // Test rejection for missing food id
+findFavouriteFood('').then(console.log).catch(console.error); // Test rejection for not providing a name
+findFavouriteFood('Megan').then(console.log).catch(console.error); // Test rejection for giving a name that doesn't exist
+findFavouriteFood('Tim').then(console.log).catch(console.error); // Test rejection for missing food id
 
 
 // ----- EXERCISES -------------------------------------------------------
