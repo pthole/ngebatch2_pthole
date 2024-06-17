@@ -55,61 +55,85 @@ const foodData: Food[] = [
 
 // Part 1: Refactor queryUser to use promises - see below first
 // When you make a new promise you will need to implicitly or explicitly return it
-const queryUser = (personName: string, callback: (user: User) => void) => {
-  const result = userData.filter((user) => user.name === personName)[ 0 ] || null
-  callback(result)
+const queryUser = (personName: string): Promise<User | null> => {
+  return new Promise((resolve) => {
+    const result = userData.filter((user) => user.name === personName)[0] || null;
+    resolve(result);
+  });
 }
 
 // Part 2: Refactor queryFood to use promises - see below first
 // When you make a new promise you will need to implicitly or explicitly return it
-const queryFood = (foodId: number, callback: (food: Food) => void) => {
-  const result = foodData.filter((food) => food.id === foodId)[ 0 ] || null
-  callback(result)
+const queryFood = (foodId: number): Promise<Food | null> => {
+  return new Promise((resolve) => {
+    const result = foodData.filter((food) => food.id === foodId)[0] || null;
+    resolve(result);
+  });
 }
 
 // Part 3: Inside findFavouriteFood use the two functions queryUser and queryFood in a chain
 // Part 4: Refactor findFavouriteFood to use promises (use your chain!) - see below first
 // When you make a new promise you will need to implicitly or explicitly return it
-const findFavouriteFood = (name: string, callback: (message: string) => void) => {
-  queryUser(name, (person) => {
-    queryFood(person.food, (foodItem) => {
-      callback(`${name} likes ${foodItem.name}`)
+const findFavouriteFood = (name: string): Promise<string> => {
+  return queryUser(name)
+    .then((person) => {
+      if (!person) {
+        throw new Error('User not found');
+      }
+      return queryFood(person.food);
     })
-  })
+    .then((foodItem) => {
+      if (!foodItem) {
+        throw new Error('Food not found');
+      }
+      return `${name} likes ${foodItem.name}`;
+    });
 }
 
 // Debugging: Use these before you start to help you understand what the code is doing
 console.log('Results:')
-findFavouriteFood('John', console.log)
-findFavouriteFood('Bob', console.log)
-findFavouriteFood('Sarah', console.log)
-findFavouriteFood('Faye', console.log)
+findFavouriteFood('John').then(console.log).catch(console.error);
+findFavouriteFood('Bob').then(console.log).catch(console.error);
+findFavouriteFood('Sarah').then(console.log).catch(console.error);
+findFavouriteFood('Faye').then(console.log).catch(console.error);
 
 // ----- EXERCISES -------------------------------------------------------
 
 // Part 1: Refactor queryUser to use promises
 // Test your refactored function by uncommenting the line below
-// queryUser('John').then(console.log) //{ name: 'John', food: 1 }
+queryUser('John').then(console.log) //{ name: 'John', food: 1 }
 
 // Part 2: Refactor queryFood to use promises
 // Test your refactored function by uncommenting the line below
-// queryFood(1).then(console.log) // { name: 'Pizza', id: 1 }
+ queryFood(1).then(console.log) // { name: 'Pizza', id: 1 }
 
 // Part 3: Inside findFavouriteFood use the two functions queryUser and queryFood in a chain
 // Test your refactored functions by uncommenting the lines below
-// queryFood(1).then(console.log) // { name: 'Pizza', id: 1 }
-//   queryFood(1)
-//   .then((foodItem) => console.log(foodItem)) //{ name: 'Pizza', id: 1 }
-// queryUser('John')
-// .then((person) => queryFood(person.food))
-// .then((foodItem) => console.log(`xxx likes ${foodItem.name}`)) // xxx likes Pizza
+ queryFood(1).then(console.log) // { name: 'Pizza', id: 1 }
+ queryFood(1).then((foodItem) => console.log(foodItem)) //{ name: 'Pizza', id: 1 }
+ queryUser('John')
+   .then((person) => {
+     if (person) {
+       return queryFood(person.food))
+     } else {
+       throw new Error('user not found');
+     }
+   })
+ .then((foodItem) => {
+   if (fooItem) {
+     console.log(`John likes ${foodItem.name}`)) // xxx likes Pizza
+   } else {
+     throw new Error('Food not found');
+   }
+ })
+.catch(console.error);
 
 // Part 4: Refactor findFavouriteFood to use promises (use your chain!)
 
 // After you have refactored all the functions, uncomment the lines below to test them
-// findFavouriteFood('John').then(console.log)
-// findFavouriteFood('Bob').then(console.log)
-// findFavouriteFood('Sarah').then(console.log)
-// findFavouriteFood('Faye').then(console.log)
+findFavouriteFood('John').then(console.log)
+findFavouriteFood('Bob').then(console.log)
+findFavouriteFood('Sarah').then(console.log)
+findFavouriteFood('Faye').then(console.log)
 
 export {}
