@@ -9,9 +9,10 @@ function sayHello(firstName: string, lastName: string) {
 sayHello('Neil','Jennings')
 
 // TODO make hiEveryone() as arrow function with sayHello functionality
+const hiEveryone = (firstName: string, lastName: string) =>
+  console.log(`hiEveryone: Hello ${firstName} ${lastName}`);
 
-hiEveryone('Neil','Jennings')
-
+hiEveryone('Neil', 'Jennings');
 
 // Rewrite this function in one-line arrow syntax:
 
@@ -20,6 +21,6 @@ function loadsOfMoney(myWages: number) {
 }
 
 // TODO make soMuchMoreMoney() as a one-line arrow expression with loadsOfMoney
-
+const soMuchMoreMoney = (myWages: number) => myWages * 10;
 const resultSum = soMuchMoreMoney(300)
 console.log(`resultSum: ${resultSum}`)
