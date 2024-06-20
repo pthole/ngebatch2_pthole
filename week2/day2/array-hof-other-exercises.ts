@@ -14,7 +14,8 @@ type Academite = {
 
 
 // Reduce the array to only the total age in months of all the doggie Academites
-// TODO
+const totalAgeInMonths = someAcademitesWithAges.reduce((acc, academite) => acc + academite.age, 0);
+console.log('Total age in months:', totalAgeInMonths);
 
 // Sort the array by the names (alphabetically)
 // Make a separate sorting function then use it
@@ -25,7 +26,11 @@ function sortByName(arr: Academite[]): Academite[] {
 const sortedName = sortByName(someAcademitesWithAges);
 
 console.log(sortedName)
-// TODO
+function sortByReverseAge(arr: Academite[]): Academite[] {
+  return arr.sort((a, b) => b.age - a.age);
+}
+const sortedByReverseAge = sortByReverseAge(someAcademitesWithAges);
+console.log('Sorted by reverse age:', sortedByReverseAge);
 
 // Sort the array by the reverse ages (so, oldest first)
 // Make a separate sorting function then use it
@@ -34,8 +39,6 @@ function sortByAge(arr: Academite[]): Academite[]{
 }
 const sortedAge = sortByAge(someAcademitesWithAges);
 console.log(sortedAge)
-
-// TODO
 
 
 // EOF

@@ -4,14 +4,17 @@ const academitePets = ['Daisy', 'Oscar', 'Wiggins', 'Gatsby']
 
 // Let's use forEach() to iterate the Academites and log the names
 academitePets // academitePets.TODO
+academitePets.forEach((pet) => {
+  console.log(pet);
+});
 
 // Lets use map() to shout out "HELLO NAME" for each Academite
-const shoutOut = 'TODO'
-console.log('Shout out is', shoutOut)
+const shoutOut = academitePets.map((pet) => `HELLO ${pet}`).join(' ');
+console.log('Shout out is', shoutOut);
 
 // Let's use filter to remove Daisy as she's been naughty today
-const filtered = 'TODO'
-console.log('Filtered names are', filtered)
+const filtered = academitePets.filter((pet) => pet !== 'Daisy');
+console.log('Filtered names are', filtered);
 
 // Here are some Academite ages (in months!)
 const academitePetsWithAges = [
@@ -24,13 +27,16 @@ const academitePetsWithAges = [
 
 // Let's filter out all the young naughty dogs/academites!
 // ...remove the ones younger than 12 months
-const above12Months = 'TODO'
-console.log('Academites above 12 months:', above12Months)
+const above12Months = academitePetsWithAges.filter((pet) => pet.age >= 12);
+console.log('Academites above 12 months:', above12Months);
 
 // Now lets filter the older academites out and then shout out the NAME of each, all in one go
 // ...we need some "method chaining", also called "functional composition"
-const filteredAndShouted = 'TODO'
-console.log('Shout out to our young best friends ', filteredAndShouted)
+const filteredAndShouted = academitePetsWithAges
+  .filter((pet) => pet.age < 12)
+  .map((pet) => `HELLO ${pet.name}`)
+  .join(' ');
+console.log('Shout out to our young best friends:', filteredAndShouted);
 
 /*
 Filtering first means that the mapping only deals with items that remain after filtering.

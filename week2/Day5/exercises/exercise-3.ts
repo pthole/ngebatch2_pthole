@@ -105,7 +105,11 @@ userData.forEach((user) => {
 })
 
 // Part 1: Add some code here to find the favourite food for all users concurrently
-
+Promise.all(tasks)
+  .then(results => {
+    results.forEach(result => console.log(result))
+  })
+  .catch(error => console.error(error))
 // ----- EXERCISES -------------------------------------------------------
 
 // Part 1
